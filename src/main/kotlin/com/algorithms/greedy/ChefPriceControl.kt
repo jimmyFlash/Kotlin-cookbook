@@ -60,5 +60,25 @@ package com.algorithms.greedy
  */
 
 fun main() {
+    val prices = intArrayOf(10, 2, 3, 4, 5)
+    val priceCeiling = 4
+    println("Revenue loss = ${solve(prices, priceCeiling)}")
+}
 
+fun solve(prices: IntArray, priceCeiling: Int): Int{
+
+    /*
+        The fold function allows to aggregate the values in an array;
+        fold iterates through the array, and applies the provided function
+        to the aggregated value <agg>, and the next element <e>.
+        The first argument to fold is what the aggregated value is initialized with, in this case, 0.
+
+        Start with an aggregated value of 0, then keep adding e-minOf(priceCeiling,e)
+        to the aggregated value. If the price ceiling did not cause the price of the
+        good to fall, that expression will be 0, otherwise, it will be equal to
+        the incurred loss for that good
+     */
+    return prices.fold(0) { agg, price ->
+        agg + (price- minOf(priceCeiling, price))
+    }
 }
