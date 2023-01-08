@@ -21,8 +21,9 @@ fun main() {
 
     val text1 = "..x..x."
     val text2 = ".x..x..xx."
+    val text3 = "xx..xx....xxx"
 
-    val bestSeatsCombination  = findClosestSeats(text2)
+    val bestSeatsCombination  = findClosestSeats(text3)
     println("min best answer is= $bestSeatsCombination")
 }
 
@@ -47,11 +48,11 @@ fun findClosestSeats(allSeatsOrder:String): Int{
     println("Occupied seats indices $xSeatIndices")
 
     // imagine moving the seats next to each other across the theatre all the way to the beginning
-    // of the seats row. 1st seat at index (x) previously will move to index (0),
+    // of the seats row. 1st seat at index(x) previously will move to index (0),
     // next seat at index (y) will move next to the previous seat at index (0) but it will be next to
     // it at index (1), will end up with 4 seats for example at indices [0,1,2,3]
     // meaning that to move to index 0 for each seat = previous_index - 0_index + new_index_relative_to_1st_seat
-    // to generalize = previousIndex - index_in_Array_of_occupied_seats_only
+    // sequentially, to generalize = previousIndex - index_in_Array_of_occupied_seats_only
     val offsetIndices = xSeatIndices.mapIndexed { currentIndex, previousIndex ->
         previousIndex - currentIndex
     }
@@ -61,22 +62,22 @@ fun findClosestSeats(allSeatsOrder:String): Int{
     if (xSeatIndices.isEmpty())
         return 0
 
-    // iterate over the string indices
-    for (seat in allSeatsOrder.indices){
-        val median = floor(offsetIndices.size.toDouble() / 2)
-        println("current seat index $seat, type:${allSeatsOrder[seat]}")
-        var offsetTotal = 0
-        // iterate over the x-indices list
-        for (xSeat in offsetIndices){
-            // calculate the abs difference between xSeat and the
-            // other seats empty/occupied
-            offsetTotal += abs(xSeat - seat)
-            // integer modulo
-            offsetTotal %= MOD_MAX_INT
-            println("diff. $xSeat - $seat  total: $offsetTotal")
-        }
-        ans = min(ans, offsetTotal)
 
+    // using median will help us find the best spot to group all the occupied seats
+    // with least moving of chairs which together will give us better time complexity
+    // compared to iterating over all seats in the row
+    val median = offsetIndices[floor(offsetIndices.size.toDouble() / 2).toInt()]
+    println("median = $median")
+
+    var offsetTotal = 0
+    for (xSeat in offsetIndices) {  // O(N)
+        // calculate the abs difference between xSeat and the
+        // other seats empty/occupied
+        offsetTotal += abs(xSeat - median)
+        // integer modulo
+        offsetTotal %= MOD_MAX_INT
+        println("diff. $xSeat - $median  total: $offsetTotal")
     }
+    ans = min(ans, offsetTotal)
     return ans
 }
