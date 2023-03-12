@@ -36,11 +36,11 @@ fun main() {
     // loop through the list of pairs of student, index
     for ((_, index)  in pairedStudentsList){
 
-        // if the index is > and the student at index has rank > the previous one
+        // if the index is > 0 and the student at index has rank > the previous one
         if(index > 0 && students[index] > students[index - 1]){
             // find the max of either the current student candies or the previous student candies + default min candy give
             // assign that value to the matching index in the candies array
-            candies[index] = max(candies[index], candies[index-1] + minCandyGiven)
+            candies[index] = max( candies[index], candies[index-1] + minCandyGiven)
         }
 
         // if the index is less than number of students -1 and current student rank is higher than the next one

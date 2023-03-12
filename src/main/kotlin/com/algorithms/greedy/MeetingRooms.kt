@@ -31,7 +31,7 @@ fun main() {
         meetingRoomManager.add(end to -1)
     }
 
-    // sort the list of pairs by the value of the 1st pair value
+    // sort the list of pairs by the start time of each pair
     meetingRoomManager.sortBy {
         it.first
     }
