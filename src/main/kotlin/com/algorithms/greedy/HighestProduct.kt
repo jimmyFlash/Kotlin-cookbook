@@ -27,11 +27,12 @@ fun main() {
 
     println(currTestCase)
 
+    // last 3 value sin the sorted array would probably yield the highest value of multi
     val takeLastThreeFromEnd = currTestCase.takeLast(3)
     val lastThreeMult = takeLastThreeFromEnd.reduce{
             i, j -> i * j
     }
-    println("lastThreeSum : $lastThreeMult")
+    println("lastThreeMulti : $lastThreeMult")
 
     val takeFirstTwoFromStart = currTestCase.take(2)
     val takeLastFromEnd = currTestCase.takeLast(1)
